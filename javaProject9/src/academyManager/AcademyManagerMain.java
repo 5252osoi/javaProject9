@@ -13,6 +13,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
@@ -31,7 +33,7 @@ public class AcademyManagerMain extends JFrame {
 			public void run() {
 				try {
 					AcademyManagerMain frame = new AcademyManagerMain();
-					frame.setVisible(true);
+//					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -48,6 +50,7 @@ public class AcademyManagerMain extends JFrame {
 		setSize(250, 200);
 		setResizable(false);
 		setLocationRelativeTo(null);
+		setVisible(true);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -120,9 +123,34 @@ public class AcademyManagerMain extends JFrame {
 					 txtPwd.setText("");
 					 txtPwd.requestFocus();
 				 } else {
-					 setVisible(false);
+					 dispose();
 					 new AcademyAdmin();
 				 }
+			}
+		});
+		btnLogIn.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+					String id =txtID.getText();
+					 @SuppressWarnings("deprecation")
+					String pwd =txtPwd.getText();
+					 AcademyManagerDAO dao=new AcademyManagerDAO();
+					 IdentifyVO iVO = dao.getAdminCheck(id);
+					 if(iVO.getId()==null) {
+						 JOptionPane.showMessageDialog(null, "존재하지 않는 ID입니다.");
+						 txtID.setText("");
+						 txtPwd.setText("");
+						 txtID.requestFocus();
+					 } else if(!iVO.getPassword().equals(pwd)) {
+						 JOptionPane.showMessageDialog(null, "틀린 비밀번호입니다.");
+						 txtPwd.setText("");
+						 txtPwd.requestFocus();
+					 } else {
+						 dispose();
+						 new AcademyAdmin();
+					 }
+				}
 			}
 		});
 		

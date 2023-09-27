@@ -5,12 +5,15 @@ create table curriculum(
 	name varchar(50) not null,
 	curriculumStart datetime default now(),
 	curriculumEnd datetime default now(),
-	fee int default 0,
-	x varchar(50) null
+	fee int default 0
 );	
 desc curriculum;
+drop table curriculum;
 select * from curriculum;
-	
+
+insert into curriculum values (default,'중등부 일반', default, '2023-12-30',default);
+update curriculum set fee=200000 where name='중등부 일반';
+
 create table teacher(
 	idx int not null auto_increment primary key,
  	name varchar(20) not null,
@@ -22,6 +25,7 @@ create table teacher(
 	pay int default 0
 );
 desc teacher;
+insert into teacher values (default,'홍길동',24,'01012345678','사직동',1,null,default);
 
 create table student(
 	idx int not null auto_increment primary key,
@@ -37,7 +41,8 @@ create table student(
 	fee int		
 );
 desc student;
-
+insert into student values (default,'홍길자',17,'01033553355','01012345678','사직동','청주고','1',null,null,default);
+select * from student;
 
 create table identify(
 	id varchar(12) not null primary key,
