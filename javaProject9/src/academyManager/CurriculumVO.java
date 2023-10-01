@@ -8,43 +8,62 @@ public class CurriculumVO {
 	private String curriculumEnd;
 	private int fee;
 	
-	
-	int getIdx() {
+	private String newName;
+
+	public int getIdx() {
 		return idx;
 	}
-	void setIdx(int idx) {
+
+	public void setIdx(int idx) {
 		this.idx = idx;
 	}
-	String getName() {
+
+	public String getName() {
 		return name;
 	}
-	void setName(String name) {
+
+	public void setName(String name) {
 		this.name = name;
 	}
-	String getCurriculumStart() {
+
+	public String getCurriculumStart() {
 		return curriculumStart;
 	}
-	void setCurriculumStart(String curriculumStart) {
+
+	public void setCurriculumStart(String curriculumStart) {
 		this.curriculumStart = curriculumStart;
 	}
-	String getCurriculumEnd() {
+
+	public String getCurriculumEnd() {
 		return curriculumEnd;
 	}
-	void setCurriculumEnd(String curriculumEnd) {
+
+	public void setCurriculumEnd(String curriculumEnd) {
 		this.curriculumEnd = curriculumEnd;
 	}
-	int getFee() {
+
+	public int getFee() {
 		return fee;
 	}
-	void setFee(int fee) {
+
+	public void setFee(int fee) {
 		this.fee = fee;
 	}
+
+	public String getNewName() {
+		return newName;
+	}
+
+	public void setNewName(String newName) {
+		this.newName = newName;
+	}
+
 	@Override
 	public String toString() {
 		return "CurriculumVO [idx=" + idx + ", name=" + name + ", curriculumStart=" + curriculumStart
-				+ ", curriculumEnd=" + curriculumEnd + ", fee=" + fee + "]";
+				+ ", curriculumEnd=" + curriculumEnd + ", fee=" + fee + ", newName=" + newName + "]";
 	}
-	
+
 	
 	
 }

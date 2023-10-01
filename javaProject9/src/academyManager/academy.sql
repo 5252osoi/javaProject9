@@ -12,7 +12,7 @@ drop table curriculum;
 select * from curriculum;
 
 insert into curriculum values (default,'중등부 일반', default, '2023-12-30',default);
-update curriculum set fee=200000 where name='중등부 일반';
+update curriculum set fee=300000 where name='고등부 입시 일반';
 
 create table teacher(
 	idx int not null auto_increment primary key,
@@ -26,6 +26,11 @@ create table teacher(
 );
 desc teacher;
 insert into teacher values (default,'홍길동',24,'01012345678','사직동',1,null,default);
+insert into teacher values (default,'김복남',27,'01098765432','율량동',4,null,default);
+select * from teacher;
+
+
+
 
 create table student(
 	idx int not null auto_increment primary key,

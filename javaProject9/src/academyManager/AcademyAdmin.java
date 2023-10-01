@@ -3,19 +3,28 @@ package academyManager;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
 @SuppressWarnings("serial")
@@ -24,9 +33,9 @@ public class AcademyAdmin extends JFrame {
 	private JPanel contentPane,tabCur,tabStu,tabTea;
 	private JTabbedPane tabbedPane;
 	private JTextField txtCur,txtStu,txtTea;
-	private JButton btnCurSearch,btnCurInsert,btnCurUpdate,btnCurDelete,btnExit1;
-	private JButton btnStuSearch,btnStuInsert,btnStuUpdate,btnStuDelete,btnExit2;
-	private JButton btnTeaSearch,btnTeaInsert,btnTeaUpdate,btnTeaDelete,btnExit3;
+	private JButton btnCurSearch,btnCurInsert,btnExit1;
+	private JButton btnStuSearch,btnStuInsert,btnExit2;
+	private JButton btnTeaSearch,btnTeaInsert,btnExit3;
 	
 	@SuppressWarnings("rawtypes")
 	Vector titleCur,vDataCur,titleStu,vDataStu,titleTea,vDataTea;
@@ -37,7 +46,9 @@ public class AcademyAdmin extends JFrame {
 	private JTable tblCur;
 	private JTable tblStu;
 	private JTable tblTea;
-	
+	private JButton btnCurRefresh;
+	private JLabel lblNewLabel;
+	private JComboBox cbCur,cbStu,cbTea;
 	/**
 	 * Launch the application.
 	 */
@@ -70,7 +81,6 @@ public class AcademyAdmin extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(2, 5, 980, 550);
 		tabbedPane.setFont(new Font("맑은 고딕 Semilight", Font.PLAIN, 14));
@@ -86,7 +96,7 @@ public class AcademyAdmin extends JFrame {
 		tabCur.add(curPn1);
 		curPn1.setLayout(null);
 		
-		JComboBox cbCur = new JComboBox();
+		cbCur = new JComboBox();
 		cbCur.setModel(new DefaultComboBoxModel(new String[] {"수업명", "담당강사"}));
 		cbCur.setFont(new Font("맑은 고딕 Semilight", Font.PLAIN, 12));
 		cbCur.setBounds(5, 7, 100, 25);
@@ -135,6 +145,9 @@ public class AcademyAdmin extends JFrame {
 		tableCellAlign(tblCur);
 		tblCur.getColumnModel().getColumn(0).setMaxWidth(50);
 		
+		//
+		
+		
 		////////////////////////////////////////
 		
 		
@@ -145,23 +158,23 @@ public class AcademyAdmin extends JFrame {
 		
 		btnCurInsert = new JButton("수업 추가");
 		btnCurInsert.setFont(new Font("맑은 고딕 Semilight", Font.PLAIN, 12));
-		btnCurInsert.setBounds(489, 5, 120, 30);
+		btnCurInsert.setBounds(721, 5, 120, 30);
 		curPn3.add(btnCurInsert);
-		
-		btnCurUpdate = new JButton("수업 수정");
-		btnCurUpdate.setFont(new Font("맑은 고딕 Semilight", Font.PLAIN, 12));
-		btnCurUpdate.setBounds(611, 5, 120, 30);
-		curPn3.add(btnCurUpdate);
-		
-		btnCurDelete = new JButton("수업 삭제");
-		btnCurDelete.setFont(new Font("맑은 고딕 Semilight", Font.PLAIN, 12));
-		btnCurDelete.setBounds(733, 5, 120, 30);
-		curPn3.add(btnCurDelete);
 		
 		btnExit1 = new JButton("작업 종료");
 		btnExit1.setFont(new Font("맑은 고딕 Semilight", Font.PLAIN, 12));
-		btnExit1.setBounds(855, 5, 120, 30);
+		btnExit1.setBounds(843, 5, 120, 30);
 		curPn3.add(btnExit1);
+		
+		btnCurRefresh = new JButton("새로 고침");
+		btnCurRefresh.setFont(new Font("맑은 고딕 Semilight", Font.PLAIN, 12));
+		btnCurRefresh.setBounds(599, 5, 120, 30);
+		curPn3.add(btnCurRefresh);
+		
+		lblNewLabel = new JLabel("//테이블을 클릭해서 수정,삭제");
+		lblNewLabel.setFont(new Font("맑은 고딕 Semilight", Font.PLAIN, 12));
+		lblNewLabel.setBounds(12, 5, 389, 30);
+		curPn3.add(lblNewLabel);
 		
 		
 		/*---------------------------------학생관리탭---------------------------------------*/
@@ -176,7 +189,7 @@ public class AcademyAdmin extends JFrame {
 		stuPn1.setBounds(0, 0, 975, 40);
 		tabStu.add(stuPn1);
 		
-		JComboBox cbStu = new JComboBox();
+		cbStu = new JComboBox();
 		cbStu.setModel(new DefaultComboBoxModel(new String[] {"이름", "수업명", "학교", "나이"}));
 		cbStu.setFont(new Font("맑은 고딕 Semilight", Font.PLAIN, 12));
 		cbStu.setBounds(5, 7, 100, 25);
@@ -234,25 +247,20 @@ public class AcademyAdmin extends JFrame {
 		stuPn3.setBounds(0, 474, 975, 40);
 		tabStu.add(stuPn3);
 		
-		btnStuInsert = new JButton("학생 정보 추가");
+		btnStuInsert = new JButton("학생 정보 입력");
 		btnStuInsert.setFont(new Font("맑은 고딕 Semilight", Font.PLAIN, 12));
-		btnStuInsert.setBounds(489, 5, 120, 30);
+		btnStuInsert.setBounds(721, 5, 120, 30);
 		stuPn3.add(btnStuInsert);
-		
-		btnStuUpdate = new JButton("학생 정보 수정");
-		btnStuUpdate.setFont(new Font("맑은 고딕 Semilight", Font.PLAIN, 12));
-		btnStuUpdate.setBounds(611, 5, 120, 30);
-		stuPn3.add(btnStuUpdate);
-		
-		btnStuDelete = new JButton("학생 정보 삭제");
-		btnStuDelete.setFont(new Font("맑은 고딕 Semilight", Font.PLAIN, 12));
-		btnStuDelete.setBounds(733, 5, 120, 30);
-		stuPn3.add(btnStuDelete);
 		
 		btnExit2 = new JButton("작업 종료");
 		btnExit2.setFont(new Font("맑은 고딕 Semilight", Font.PLAIN, 12));
-		btnExit2.setBounds(855, 5, 120, 30);
+		btnExit2.setBounds(843, 5, 120, 30);
 		stuPn3.add(btnExit2);
+		
+		JButton btnStuRefresh = new JButton("새로 고침");
+		btnStuRefresh.setFont(new Font("맑은 고딕 Semilight", Font.PLAIN, 12));
+		btnStuRefresh.setBounds(599, 5, 120, 30);
+		stuPn3.add(btnStuRefresh);
 		
 		/*--------------------------------강사관리----------------------------------------*/
 		tabTea = new JPanel();
@@ -264,7 +272,7 @@ public class AcademyAdmin extends JFrame {
 		teaPn1.setBounds(0, 0, 975, 40);
 		tabTea.add(teaPn1);
 		
-		JComboBox cbTea = new JComboBox();
+		cbTea = new JComboBox();
 		cbTea.setModel(new DefaultComboBoxModel(new String[] {"이름", "나이"}));
 		cbTea.setFont(new Font("맑은 고딕 Semilight", Font.PLAIN, 12));
 		cbTea.setBounds(5, 7, 100, 25);
@@ -319,33 +327,254 @@ public class AcademyAdmin extends JFrame {
 		
 		btnTeaInsert = new JButton("강사 정보 추가");
 		btnTeaInsert.setFont(new Font("맑은 고딕 Semilight", Font.PLAIN, 12));
-		btnTeaInsert.setBounds(489, 5, 120, 30);
+		btnTeaInsert.setBounds(721, 5, 120, 30);
 		teaPn3.add(btnTeaInsert);
-		
-		btnTeaUpdate = new JButton("강사 정보 수정");
-		btnTeaUpdate.setFont(new Font("맑은 고딕 Semilight", Font.PLAIN, 12));
-		btnTeaUpdate.setBounds(611, 5, 120, 30);
-		teaPn3.add(btnTeaUpdate);
-		
-		btnTeaDelete = new JButton("강사 정보 삭제");
-		btnTeaDelete.setFont(new Font("맑은 고딕 Semilight", Font.PLAIN, 12));
-		btnTeaDelete.setBounds(733, 5, 120, 30);
-		teaPn3.add(btnTeaDelete);
 		
 		btnExit3 = new JButton("작업 종료");
 		btnExit3.setFont(new Font("맑은 고딕 Semilight", Font.PLAIN, 12));
-		btnExit3.setBounds(855, 5, 120, 30);
+		btnExit3.setBounds(843, 5, 120, 30);
 		teaPn3.add(btnExit3);
+		
+		JButton btnTeaRefresh = new JButton("새로 고침");
+		btnTeaRefresh.setFont(new Font("맑은 고딕 Semilight", Font.PLAIN, 12));
+		btnTeaRefresh.setBounds(599, 5, 120, 30);
+		teaPn3.add(btnTeaRefresh);
 		
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////여기서부터 버튼액션////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////수업관리탭////////////////////////////
+		//검색버튼 눌렀을때의 처리
+		btnCurSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				getCurConditionProcess();
+				
+			}
+		});
+		//콤보박스 선택시 커서를 입력 텍스트필드로
+		cbCur.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				txtCur.requestFocus();
+			}
+		});
 		
+		//수업탭에서 새로고침버튼
+		btnCurRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dtmCur = new DefaultTableModel(vDataCur,titleCur);
+				dtmCur.setNumRows(0);
+				//새로고침 하기위해 테이블 초기화
+				
+				//바뀐 리스트 받아오기
+				vDataCur=dao.getCurList();
+				//테이블 새로 만들기
+				dtmCur = new DefaultTableModel(vDataCur,titleCur);
+				tblCur.setModel(dtmCur);
+				//정렬
+				tableCellAlign(tblCur);
+				tblCur.getColumnModel().getColumn(0).setMaxWidth(50);
+				
+			}
+		});
 		
+		//수업추가버튼
+		btnCurInsert.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new CurInput();
+			}
+		});
+		/////////////수업탭 테이블 선택하면 수정창 뜨게끔 만들것임!!!//////////////
+		tblCur.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseReleased(MouseEvent e) {}
+			@Override
+			public void mousePressed(MouseEvent e) {}
+			@Override
+			public void mouseExited(MouseEvent e) {}
+			@Override
+			public void mouseEntered(MouseEvent e) {}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				CurriculumVO cVO=new CurriculumVO();
+				//선택한 셀의 행 번호
+				int row = tblCur.getSelectedRow();
+				//테이블 모델객체 가져오기
+				TableModel data = tblCur.getModel();
+				
+//				titleCur.add("번호");
+//				titleCur.add("수업명");
+//				titleCur.add("수업시작일");
+//				titleCur.add("수업종료일");
+//				titleCur.add("담당강사");
+//				titleCur.add("수강인원");
+//				titleCur.add("수업료/인");
+				int idx=(int)data.getValueAt(row, 0);
+				String name = (String)data.getValueAt(row,1);
+				int fee = (int)data.getValueAt(row, 6);
+				cVO.setIdx(idx);
+				cVO.setName(name);
+				cVO.setFee(fee);
+				new CurUpdate(cVO);
+			}
+		});
+///////////////////////////////////////////////////////학생관리 탭 버튼액션///////////////////////////////////////////////////////
 		
+		//학생관리탭에서 검색버튼
+		btnStuSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				getStuConditionProcess();
+				
+			}
+		});
 		
+		//학생관리탭에서 콤보박스 선택시 커서이동
+		cbStu.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				txtStu.requestFocus();
+			}
+		});
 		
+		//학생탭 테이블 클릭시 수정/삭제로이동
+		tblStu.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseReleased(MouseEvent e) {}
+			@Override
+			public void mousePressed(MouseEvent e) {}
+			@Override
+			public void mouseExited(MouseEvent e) {}
+			@Override
+			public void mouseEntered(MouseEvent e) {}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				StudentVO sVO=new StudentVO();
+				//선택한 셀의 행 번호
+				int row = tblStu.getSelectedRow();
+				//테이블 모델객체 가져오기
+				TableModel data = tblStu.getModel();
+				
+				int idx=(int)data.getValueAt(row, 0);
+				String name = (String)data.getValueAt(row,1);
+				int age = (int)data.getValueAt(row, 2);
+				String phone = (String)data.getValueAt(row, 3);
+				String famPhone = (String)data.getValueAt(row, 4);
+				String address=(String)data.getValueAt(row, 5);
+				String school=(String)data.getValueAt(row, 6);
+				
+				sVO.setIdx(idx);
+				sVO.setName(name);
+				sVO.setAge(age); //012-4567-9012
+				sVO.setPhone(phone.substring(0,3)+phone.substring(4,8)+phone.substring(9,13));
+				sVO.setFamphone(famPhone.substring(0,3)+phone.substring(4,8)+phone.substring(9,13));
+				sVO.setAddress(address);
+				sVO.setSchool(school);
+				new StuUpdate(sVO);
+			}
+		});
 		
+		//학생관리 탭 새로고침버튼
+		btnStuRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dtmStu = new DefaultTableModel(vDataStu,titleStu);
+				dtmStu.setNumRows(0);
+				//새로고침 하기위해 테이블 초기화
+				
+				//바뀐 리스트 받아오기
+				vDataStu=dao.getStuList();
+				//테이블 새로 만들기
+				dtmStu = new DefaultTableModel(vDataStu,titleStu);
+				tblStu.setModel(dtmStu);
+				//정렬
+				tableCellAlign(tblStu);
+				tblStu.getColumnModel().getColumn(0).setMaxWidth(50);
+			}
+		});
+		//학생 정보 추가버튼
+		btnStuInsert.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new StuInput();
+				
+			}
+		});
+/////////////////////////////////////////////////강사탭 버튼액션/////////////////////////////////////////////////////////////////
+		
+		//검색버튼 눌렀을때의 처리
+		
+		btnTeaSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				getTeaConditionProcess();
+				
+			}
+		});
+		//콤보박스 선택시 커서를 입력 텍스트필드로
+		cbTea.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				txtTea.requestFocus();
+			}
+		});
+		
+		//강사탭 테이블 클릭시 수정/삭제탭
+		tblTea.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseReleased(MouseEvent e) {}
+			@Override
+			public void mousePressed(MouseEvent e) {}
+			@Override
+			public void mouseExited(MouseEvent e) {}
+			@Override
+			public void mouseEntered(MouseEvent e) {}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				TeacherVO tVO=new TeacherVO();
+				//선택한 셀의 행 번호
+				int row = tblTea.getSelectedRow();
+				//테이블 모델객체 가져오기
+				TableModel data = tblTea.getModel();
+				
+				int idx=(int)data.getValueAt(row, 0);
+				String name = (String)data.getValueAt(row,1);
+				int age = (int)data.getValueAt(row, 2);
+				String phone = (String)data.getValueAt(row, 3);
+				String address=(String)data.getValueAt(row, 4);
+				int pay=(int)data.getValueAt(row, 6);
+				
+				tVO.setIdx(idx);
+				tVO.setName(name);
+				tVO.setAge(age); //012-4567-9012
+				tVO.setPhone(phone.substring(0,3)+phone.substring(4,8)+phone.substring(9,13));
+				tVO.setAddress(address);
+				new TeaUpdate(tVO);
+			}
+		});
+		
+		//신규 강사 추가 버튼
+		btnTeaInsert.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new TeaInput();
+			}
+		});
+		
+		//새로고침
+		btnTeaRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dtmTea = new DefaultTableModel(vDataTea,titleTea);
+				dtmTea.setNumRows(0);
+				//새로고침 하기위해 테이블 초기화
+				
+				//바뀐 리스트 받아오기
+				vDataTea=dao.getTeaList();
+				//테이블 새로 만들기
+				dtmTea = new DefaultTableModel(vDataTea,titleTea);
+				tblTea.setModel(dtmTea);
+				//정렬
+				tableCellAlign(tblTea);
+				tblTea.getColumnModel().getColumn(0).setMaxWidth(50);
+			}
+		});
+		
+//////////////////////////////////////////////////////종료버튼//////////////////////////////////////////////////////////
 		btnExit1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
@@ -361,10 +590,71 @@ public class AcademyAdmin extends JFrame {
 				System.exit(0);
 			}
 		});
+		
+		
+		
+		
+	}
+	//조건검색 강사탭
+	protected void getTeaConditionProcess() {
+		String cbTeaCondi=cbTea.getSelectedItem().toString();
+		String txtTeaCondi=txtTea.getText();
+		if(txtTeaCondi.trim().equals("")) {
+			JOptionPane.showMessageDialog(null, "검색 할 내용을 입력하세요.");
+			txtTea.requestFocus();
+			return;
+		}
+		if(cbTeaCondi.equals("이름")) vDataTea=dao.getTeaConditionSearch("t.name", txtTeaCondi);
+		else if(cbTeaCondi.equals("나이")) vDataTea=dao.getTeaConditionSearch("t.age", txtTeaCondi);
+		
+		dtmTea.setDataVector(vDataTea, titleTea);
+		tableCellAlign(tblTea);
+		tblTea.getColumnModel().getColumn(0).setMaxWidth(50);
+	}
+	//조건검색 학생탭
+	protected void getStuConditionProcess() {
+		String cbStuCondi=cbStu.getSelectedItem().toString();
+		String txtStuCondi=txtStu.getText();
+		if(txtStuCondi.trim().equals("")) {
+			JOptionPane.showMessageDialog(null, "검색 할 내용을 입력하세요.");
+			txtStu.requestFocus();
+			return;
+		}
+		if(cbStuCondi.equals("이름")) vDataStu=dao.getStuConditionSearch("s.name", txtStuCondi);
+		else if(cbStuCondi.equals("수업명")) vDataStu=dao.getStuConditionSearch("c.name", txtStuCondi);
+		else if(cbStuCondi.equals("학교")) vDataStu=dao.getStuConditionSearch("s.school", txtStuCondi);
+		else if(cbStuCondi.equals("나이")) vDataStu=dao.getStuConditionSearch("s.age", txtStuCondi);
+		
+		dtmStu.setDataVector(vDataStu, titleStu);
+		tableCellAlign(tblStu);
+		tblStu.getColumnModel().getColumn(0).setMaxWidth(50);
 	}
 
-	private void tableCellAlign(JTable tblCur2) {
-		// TODO Auto-generated method stub
+	//	수업명,담당강사 둘중 하나로 조건검색하기
+	protected void getCurConditionProcess() {
+		String cbCurCondi=cbCur.getSelectedItem().toString();
+		String txtCurCondi=txtCur.getText(); //입력받은내용(검색내용
+		if(txtCurCondi.trim().equals("")) {
+			JOptionPane.showMessageDialog(null, "검색 할 내용을 입력하세요.");
+			txtCur.requestFocus();
+			return;
+		}
+		if(cbCurCondi.equals("수업명")) vDataCur=dao.getCurConditionSearch("c.name", txtCurCondi);
+		else if(cbCurCondi.equals("담당강사")) vDataCur=dao.getCurConditionSearch("t.Name", txtCurCondi);
 		
+		dtmCur.setDataVector(vDataCur, titleCur);
+
+		tableCellAlign(tblCur);
+		tblCur.getColumnModel().getColumn(0).setMaxWidth(50);
+		
+	}
+	//테이블 가운데 정렬
+	private void tableCellAlign(JTable tbl) {
+		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
+		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
+		TableColumnModel tcm = tbl.getColumnModel();
+		for(int i=0; i<tcm.getColumnCount(); i++) {
+			tcm.getColumn(i).setCellRenderer(dtcr);
+		}
 	}
 }
