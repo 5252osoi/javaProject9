@@ -450,7 +450,7 @@ public class AcademyManagerDAO {
 	public int setStuUpdate(StudentVO sVO) {
 		int res=0;
 		try {
-			sql="update Student set name=?, age=?, phone=?,famphone=?,address=?,school=?,curri1=? where idx=?";
+			sql="update student set name=?, age=?, phone=?, famphone=?, address=?, school=?, curri1=? where idx=?";
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, sVO.getName());
 			pstmt.setInt(2, sVO.getAge());
@@ -484,14 +484,13 @@ public class AcademyManagerDAO {
 				rs=pstmt.executeQuery();
 				//수업명으로 검색한 뒤 수업의 idx값을 가져와서 학생의 curri1에 있는 값을 검색
 				int cIdx=0;
-				while(rs.next()) {
-					Vector vo = new Vector<>();
+				if(rs.next()) {
 					cIdx=rs.getInt("idx");
-					
 					sql2="select s.* from student s where curri1="+cIdx;
 					pstmt2=conn.prepareStatement(sql2);
 					rs2=pstmt2.executeQuery();
-					if(rs2.next()) {
+					while(rs2.next()) {
+						Vector vo = new Vector<>();
 						vo.add(rs2.getInt("idx"));
 						vo.add(rs2.getString("name"));
 						vo.add(rs2.getInt("age"));	
@@ -505,6 +504,9 @@ public class AcademyManagerDAO {
 						vo.add(rs.getString("cName"));			//수강과목
 						vo.add(rs.getInt("cFee"));				//수업료
 						vData.add(vo);
+						
+//						if(rs2.next()) {
+//						}
 					}
 				}
 				

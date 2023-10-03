@@ -237,20 +237,20 @@ public class StuUpdate extends JFrame {
 					JOptionPane.showMessageDialog(null, "번호는 숫자로 입력하세요(-제외 11자리)");
 					txtFamphone.requestFocus();
 				} else {
-					StudentVO vo = new StudentVO();
-					vo.setName(name);
-					vo.setAge(Integer.parseInt(age));
-					vo.setPhone(phone);
-					vo.setFamphone(famPhone);
-					vo.setAddress(address);
-					vo.setSchool(school);
+//					StudentVO vo = new StudentVO();
+					sVO.setName(name);
+					sVO.setAge(Integer.parseInt(age));
+					sVO.setPhone(phone);
+					sVO.setFamphone(famPhone);
+					sVO.setAddress(address);
+					sVO.setSchool(school);
 					//선택한 수업명과 비교해서 수업의 idx 찾기 
 					for(int i=0; i<vos.size(); i++) {
 						if(choiceCur.equals(curFindIdx[i][0])) {
-							vo.setCurri1(Integer.parseInt(curFindIdx[i][1]));
+							sVO.setCurri1(Integer.parseInt(curFindIdx[i][1]));
 						}
 					}
-					res=dao.setStuUpdate(vo);
+					res=dao.setStuUpdate(sVO);
 					if(res==0) {
 						JOptionPane.showMessageDialog(null, "정보 등록 실패.");
 						txtName.requestFocus();
